@@ -11,6 +11,7 @@
 namespace brave_today {
 
 std::string GetHostname();
+std::string GetRegionURLPart();
 
 }  // namespace brave_today
 

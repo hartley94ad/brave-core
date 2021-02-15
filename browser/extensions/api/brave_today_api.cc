@@ -20,5 +20,9 @@ ExtensionFunction::ResponseAction BraveTodayGetHostnameFunction::Run() {
   return RespondNow(OneArgument(base::Value(brave_today::GetHostname())));
 }
 
+ExtensionFunction::ResponseAction BraveTodayGetRegionURLPartFunction::Run() {
+  return RespondNow(OneArgument(base::Value(brave_today::GetRegionURLPart())));
+}
+
 }  // namespace api
 }  // namespace extensions

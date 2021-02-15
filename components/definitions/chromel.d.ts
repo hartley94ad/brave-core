@@ -239,6 +239,7 @@ declare namespace chrome.braveToday {
     addListener: (callback: () => any) => void
   }
   const getHostname: (callback: (hostname: string) => any) => void
+  const getRegionURLPart: (callback: (regionURLPart: string) => any) => void
 }
 
 type BlockTypes = 'shieldsAds' | 'trackers' | 'httpUpgradableResources' | 'javascript' | 'fingerprinting'

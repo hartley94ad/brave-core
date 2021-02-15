@@ -9,6 +9,8 @@
 
 #include "base/command_line.h"
 #include "brave/components/brave_today/common/switches.h"
+#include "brave/components/l10n/browser/locale_helper.h"
+#include "brave/components/l10n/common/locale_util.h"
 
 namespace brave_today {
 
@@ -21,6 +23,18 @@ std::string GetHostname() {
   } else {
     return from_switch;
   }
+}
+
+std::string GetRegionURLPart() {
+  const std::string locale =
+      brave_l10n::LocaleHelper::GetInstance()->GetLocale();
+  const std::string language_code = brave_l10n::GetLanguageCode(locale);
+  // TODO(petemill): Have a remotely-updatable list of supported language
+  // variations.
+  if (language_code == "ja") {
+    return "ja";
+  }
+  return "";
 }
 
 }  // namespace brave_today

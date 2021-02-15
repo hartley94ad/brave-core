@@ -21,6 +21,16 @@ class BraveTodayGetHostnameFunction : public ExtensionFunction {
   ResponseAction Run() override;
 };
 
+class BraveTodayGetRegionURLPartFunction : public ExtensionFunction {
+ public:
+  DECLARE_EXTENSION_FUNCTION("braveToday.getRegionURLPart", UNKNOWN)
+
+ protected:
+  ~BraveTodayGetRegionURLPartFunction() override {}
+
+  ResponseAction Run() override;
+};
+
 }  // namespace api
 }  // namespace extensions
 
