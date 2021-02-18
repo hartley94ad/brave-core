@@ -79,18 +79,33 @@ void AdsTabHelper::RunIsolatedJavaScript(
 
   dom_distiller::RunIsolatedJavaScript(
       render_frame_host, "document.body.innerText",
-      base::BindOnce(&AdsTabHelper::OnJavaScriptResult,
+      base::BindOnce(&AdsTabHelper::OnJavaScriptContentResult,
+                     weak_factory_.GetWeakPtr()));
+
+  dom_distiller::RunIsolatedJavaScript(
+      render_frame_host, "document.documentElement.innerHTML",
+      base::BindOnce(&AdsTabHelper::OnJavaScriptHtmlResult,
                      weak_factory_.GetWeakPtr()));
 }
 
-void AdsTabHelper::OnJavaScriptResult(base::Value value) {
+void AdsTabHelper::OnJavaScriptContentResult(base::Value value) {
   DCHECK(ads_service_ && ads_service_->IsEnabled());
 
   DCHECK(value.is_string());
-  std::string content;
-  value.GetAsString(&content);
+  std::string text;
+  value.GetAsString(&text);
 
-  ads_service_->OnPageLoaded(tab_id_, redirect_chain_, content);
+  ads_service_->OnTextLoaded(tab_id_, redirect_chain_, text);
+}
+
+void AdsTabHelper::OnJavaScriptHtmlResult(base::Value value) {
+  DCHECK(ads_service_ && ads_service_->IsEnabled());
+
+  DCHECK(value.is_string());
+  std::string html;
+  value.GetAsString(&html);
+
+  ads_service_->OnHtmlLoaded(tab_id_, redirect_chain_, html);
 }
 
 void AdsTabHelper::DidFinishNavigation(

@@ -130,9 +130,9 @@ void AdsImpl::OnAdsSubdivisionTargetingCodeHasChanged() {
   subdivision_targeting_->MaybeFetchForCurrentLocale();
 }
 
-void AdsImpl::OnPageLoaded(const int32_t tab_id,
+void AdsImpl::OnHtmlLoaded(const int32_t tab_id,
                            const std::vector<std::string>& redirect_chain,
-                           const std::string& content) {
+                           const std::string& html) {
   DCHECK(!redirect_chain.empty());
 
   if (!IsInitialized()) {
@@ -148,8 +148,24 @@ void AdsImpl::OnPageLoaded(const int32_t tab_id,
   }
 
   ad_transfer_->MaybeTransferAd(tab_id, original_url);
+  conversions_->MaybeConvert(redirect_chain, html);
+}
 
-  conversions_->MaybeConvert(redirect_chain);
+void AdsImpl::OnTextLoaded(const int32_t tab_id,
+                              const std::vector<std::string>& redirect_chain,
+                              const std::string& text) {
+  DCHECK(!redirect_chain.empty());
+
+  if (!IsInitialized()) {
+    return;
+  }
+
+  const std::string url = redirect_chain.back();
+
+  if (!DoesUrlHaveSchemeHTTPOrHTTPS(url)) {
+    BLOG(1, "Visited URL is not supported");
+    return;
+  }
 
   const base::Optional<TabInfo> last_visible_tab =
       TabManager::Get()->GetLastVisible();
@@ -166,7 +182,7 @@ void AdsImpl::OnPageLoaded(const int32_t tab_id,
   if (SearchProviders::IsSearchEngine(url)) {
     BLOG(1, "Search engine pages are not supported for text classification");
   } else {
-    const std::string stripped_text = StripNonAlphaCharacters(content);
+    const std::string stripped_text = StripNonAlphaCharacters(text);
     text_classification_processor_->Process(stripped_text);
   }
 }

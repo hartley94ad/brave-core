@@ -34,6 +34,8 @@ struct CatalogCreativeSetInfo {
   CatalogCreativeAdNotificationList creative_ad_notifications;
   CatalogCreativeNewTabPageAdList creative_new_tab_page_ads;
   CatalogCreativePromotedContentAdList creative_promoted_content_ads;
+  // TODO(https://github.com/brave/brave-browser/issues/14226): Create
+  // conversion types
   ConversionList conversions;
 };
 

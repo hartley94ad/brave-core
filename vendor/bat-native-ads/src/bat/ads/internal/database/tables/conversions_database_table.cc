@@ -51,6 +51,7 @@ void Conversions::GetAll(GetConversionsCallback callback) {
       "ac.creative_set_id, "
       "ac.type, "
       "ac.url_pattern, "
+      "ac.advertiser_public_key, "
       "ac.observation_window, "
       "ac.expiry_timestamp "
       "FROM %s AS ac "
@@ -66,6 +67,7 @@ void Conversions::GetAll(GetConversionsCallback callback) {
       DBCommand::RecordBindingType::STRING_TYPE,  // creative_set_id
       DBCommand::RecordBindingType::STRING_TYPE,  // type
       DBCommand::RecordBindingType::STRING_TYPE,  // url_pattern
+      DBCommand::RecordBindingType::STRING_TYPE,  // advertiser_public_key
       DBCommand::RecordBindingType::INT_TYPE,     // observation_window
       DBCommand::RecordBindingType::INT64_TYPE    // expiry_timestamp
   };
@@ -145,6 +147,7 @@ int Conversions::BindParameters(DBCommand* command,
     BindString(command, index++, conversion.creative_set_id);
     BindString(command, index++, conversion.type);
     BindString(command, index++, conversion.url_pattern);
+    BindString(command, index++, conversion.advertiser_public_key);
     BindInt(command, index++, conversion.observation_window);
     BindInt64(command, index++, conversion.expiry_timestamp);
 
@@ -166,10 +169,11 @@ std::string Conversions::BuildInsertOrUpdateQuery(
       "(creative_set_id, "
       "type, "
       "url_pattern, "
+      "advertiser_public_key, "
       "observation_window, "
       "expiry_timestamp) VALUES %s",
       get_table_name().c_str(),
-      BuildBindingParameterPlaceholders(5, count).c_str());
+      BuildBindingParameterPlaceholders(6, count).c_str());
 }
 
 void Conversions::OnGetConversions(DBCommandResponsePtr response,
@@ -196,8 +200,9 @@ ConversionInfo Conversions::GetConversionFromRecord(DBRecord* record) const {
   info.creative_set_id = ColumnString(record, 0);
   info.type = ColumnString(record, 1);
   info.url_pattern = ColumnString(record, 2);
-  info.observation_window = ColumnInt(record, 3);
-  info.expiry_timestamp = ColumnInt64(record, 4);
+  info.advertiser_public_key = ColumnString(record, 3);
+  info.observation_window = ColumnInt(record, 4);
+  info.expiry_timestamp = ColumnInt64(record, 5);
 
   return info;
 }
@@ -210,6 +215,7 @@ void Conversions::CreateTableV1(DBTransaction* transaction) {
       "(creative_set_id TEXT NOT NULL, "
       "type TEXT NOT NULL, "
       "url_pattern TEXT NOT NULL, "
+      "advertiser_public_key TEXT NOT NULL, "  // TODO(Moritz Haller): upgrade path/migration?
       "observation_window INTEGER NOT NULL, "
       "expiry_timestamp TIMESTAMP NOT NULL, "
       "UNIQUE(creative_set_id, type, url_pattern) ON CONFLICT REPLACE, "

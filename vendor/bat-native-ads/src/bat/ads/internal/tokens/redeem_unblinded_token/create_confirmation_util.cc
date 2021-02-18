@@ -14,6 +14,7 @@
 #include "base/values.h"
 #include "bat/ads/ads.h"
 #include "bat/ads/internal/account/confirmations/confirmation_info.h"
+// #include "bat/ads/internal/database/tables/conversion_queue_database_table.h"
 #include "bat/ads/internal/features/features.h"
 #include "bat/ads/internal/locale/country_code_util.h"
 #include "bat/ads/internal/platform/platform_helper.h"
@@ -76,6 +77,40 @@ std::string CreateConfirmationRequestDTO(const ConfirmationInfo& confirmation) {
     }
 
     dto.SetKey("experiment", std::move(dictionary));
+  }
+
+  // TODO(Moritz Haller): Get conversion envelope from DB - need to inject?
+
+  // database::table::ConversionQueue conversion_queue_database_table;
+  // conversion_queue_database_table.GetAll([=](const Result result,
+  //     const ConversionQueueItemList& conversion_queue_items) {
+  //   if (result != SUCCESS) {
+  //     BLOG(1, "Failed to get conversion queue items");
+  //     return;
+  //   }
+
+  //   if (conversion_queue_items.empty()) {
+  //     BLOG(1, "No conversion queue items found");
+  //     return;
+  //   }
+
+  //   ConversionQueueItemInfo conversion_queue_item =
+  //       FindQueueItem(confirmation.creative_instance_id);
+
+  //   VerifiableConversionEnvelopeInfo envelope =
+  //       conversion_queue_item.envelope;
+
+  //   CreateConfirmationRequestDTO(confirmation, envelope);
+  // });
+
+  // TODO(Moritz Haller): switch case
+  if (confirmation.type == ConfirmationType::kConversion) {
+    base::Value dictionary(base::Value::Type::DICTIONARY);
+    dictionary.SetKey("alg", base::Value("alg_placeholder"));
+    dictionary.SetKey("ciphertext", base::Value("ciphertext_placeholder"));
+    dictionary.SetKey("epk", base::Value("epk_placeholder"));
+    dictionary.SetKey("nonce", base::Value("nonce_placeholder"));
+    dto.SetKey("envelope", std::move(dictionary));
   }
 
   const std::string platform = PlatformHelper::GetInstance()->GetPlatformName();
