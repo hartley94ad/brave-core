@@ -186,16 +186,16 @@ std::vector<uint8_t> Encrypt(const std::vector<uint8_t>& plaintext,
 }
 
 std::vector<uint8_t> Decrypt(const std::vector<uint8_t>& ciphertext,
-                    const std::vector<uint8_t>& nonce,
-                    const std::vector<uint8_t>& ephemeral_public_key,
-                    const std::vector<uint8_t>& secret_key) {
+                             const std::vector<uint8_t>& nonce,
+                             const std::vector<uint8_t>& ephemeral_public_key,
+                             const std::vector<uint8_t>& secret_key) {
   std::vector<uint8_t> padded_plaintext(ciphertext.size());
   crypto_box_open(&padded_plaintext.front(), &ciphertext.front(),
-      ciphertext.size(), &nonce.front(), &ephemeral_public_key.front(),
-          &secret_key.front());
+                  ciphertext.size(), &nonce.front(),
+                  &ephemeral_public_key.front(), &secret_key.front());
 
-  std::vector<uint8_t> plaintext(padded_plaintext.begin() + crypto_box_ZEROBYTES,
-                                       padded_plaintext.end());
+  std::vector<uint8_t> plaintext(
+      padded_plaintext.begin() + crypto_box_ZEROBYTES, padded_plaintext.end());
 
   return plaintext;
 }

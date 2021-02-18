@@ -90,8 +90,8 @@ class ADS_EXPORT Ads {
   // client-side redirect and the current URL. |content| will contain the HTML
   // page content
   virtual void OnTextLoaded(const int32_t tab_id,
-                               const std::vector<std::string>& redirect_chain,
-                               const std::string& text) = 0;
+                            const std::vector<std::string>& redirect_chain,
+                            const std::string& text) = 0;
 
   // Similar to |OnTextLoaded| but instead of inner text it keeps the markup
   virtual void OnHtmlLoaded(const int32_t tab_id,

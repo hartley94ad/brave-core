@@ -10,7 +10,7 @@ namespace ads {
 VerifiableConversionInfo::VerifiableConversionInfo() = default;
 
 VerifiableConversionInfo::VerifiableConversionInfo(
-      const VerifiableConversionInfo& info) = default;
+    const VerifiableConversionInfo& info) = default;
 
 VerifiableConversionInfo::~VerifiableConversionInfo() = default;
 

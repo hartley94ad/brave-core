@@ -215,7 +215,8 @@ void Conversions::CreateTableV1(DBTransaction* transaction) {
       "(creative_set_id TEXT NOT NULL, "
       "type TEXT NOT NULL, "
       "url_pattern TEXT NOT NULL, "
-      "advertiser_public_key TEXT NOT NULL, "  // TODO(Moritz Haller): upgrade path/migration?
+      "advertiser_public_key TEXT NOT NULL, "  // TODO(Moritz Haller): upgrade
+                                               // path/migration?
       "observation_window INTEGER NOT NULL, "
       "expiry_timestamp TIMESTAMP NOT NULL, "
       "UNIQUE(creative_set_id, type, url_pattern) ON CONFLICT REPLACE, "

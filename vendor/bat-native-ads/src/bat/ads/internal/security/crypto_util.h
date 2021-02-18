@@ -38,9 +38,9 @@ std::vector<uint8_t> Encrypt(const std::vector<uint8_t>& message,
                              const std::vector<uint8_t>& ephemeral_secret_key);
 
 std::vector<uint8_t> Decrypt(const std::vector<uint8_t>& ciphertext,
-                    const std::vector<uint8_t>& nonce,
-                    const std::vector<uint8_t>& ephemeral_public_key,
-                    const std::vector<uint8_t>& secret_key);
+                             const std::vector<uint8_t>& nonce,
+                             const std::vector<uint8_t>& ephemeral_public_key,
+                             const std::vector<uint8_t>& secret_key);
 
 }  // namespace security
 }  // namespace ads

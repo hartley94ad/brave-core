@@ -12,7 +12,6 @@ KeyPairInfo::KeyPairInfo() = default;
 KeyPairInfo::KeyPairInfo(const KeyPairInfo& info) = default;
 KeyPairInfo::~KeyPairInfo() = default;
 
-
 bool KeyPairInfo::operator==(const KeyPairInfo& rhs) const {
   return public_key == rhs.public_key && secret_key == rhs.secret_key;
 }

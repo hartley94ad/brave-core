@@ -10,18 +10,19 @@ namespace security {
 
 VerifiableConversionEnvelopeInfo::VerifiableConversionEnvelopeInfo() = default;
 
-VerifiableConversionEnvelopeInfo::VerifiableConversionEnvelopeInfo(const VerifiableConversionEnvelopeInfo& info) = default;
+VerifiableConversionEnvelopeInfo::VerifiableConversionEnvelopeInfo(
+    const VerifiableConversionEnvelopeInfo& info) = default;
 
 VerifiableConversionEnvelopeInfo::~VerifiableConversionEnvelopeInfo() = default;
 
-
-bool VerifiableConversionEnvelopeInfo::operator==(const VerifiableConversionEnvelopeInfo& rhs) const {
+bool VerifiableConversionEnvelopeInfo::operator==(
+    const VerifiableConversionEnvelopeInfo& rhs) const {
   return algorithm == rhs.algorithm && ciphertext == rhs.ciphertext &&
-         ephemeral_public_key == rhs.ephemeral_public_key &&
-         nonce == rhs.nonce;
+         ephemeral_public_key == rhs.ephemeral_public_key && nonce == rhs.nonce;
 }
 
-bool VerifiableConversionEnvelopeInfo::operator!=(const VerifiableConversionEnvelopeInfo& rhs) const {
+bool VerifiableConversionEnvelopeInfo::operator!=(
+    const VerifiableConversionEnvelopeInfo& rhs) const {
   return !(*this == rhs);
 }
 

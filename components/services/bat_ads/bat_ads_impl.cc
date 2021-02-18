@@ -71,8 +71,8 @@ void BatAdsImpl::OnAdsSubdivisionTargetingCodeHasChanged() {
 }
 
 void BatAdsImpl::OnTextLoaded(const int32_t tab_id,
-                                 const std::vector<std::string>& redirect_chain,
-                                 const std::string& text) {
+                              const std::vector<std::string>& redirect_chain,
+                              const std::string& text) {
   ads_->OnTextLoaded(tab_id, redirect_chain, text);
 }
 

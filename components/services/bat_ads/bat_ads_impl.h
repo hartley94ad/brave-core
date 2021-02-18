@@ -49,8 +49,8 @@ class BatAdsImpl :
   void OnAdsSubdivisionTargetingCodeHasChanged() override;
 
   void OnTextLoaded(const int32_t tab_id,
-                       const std::vector<std::string>& redirect_chain,
-                       const std::string& text) override;
+                    const std::vector<std::string>& redirect_chain,
+                    const std::string& text) override;
 
   void OnHtmlLoaded(const int32_t tab_id,
                     const std::vector<std::string>& redirect_chain,

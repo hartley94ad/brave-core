@@ -181,13 +181,11 @@ TEST(BatAdsSecurityCryptoUtilsTest, Encrypt) {
   std::vector<uint8_t> plaintext(message.begin(), message.end());
 
   // Act
-  const std::vector<uint8_t> ciphertext =
-    security::Encrypt(plaintext, nonce, key_pair.public_key,
-        ephemeral_key_pair.secret_key);
+  const std::vector<uint8_t> ciphertext = security::Encrypt(
+      plaintext, nonce, key_pair.public_key, ephemeral_key_pair.secret_key);
 
-  const std::vector<uint8_t> decrypted_plaintext =
-    security::Decrypt(ciphertext, nonce, ephemeral_key_pair.public_key,
-        key_pair.secret_key);
+  const std::vector<uint8_t> decrypted_plaintext = security::Decrypt(
+      ciphertext, nonce, ephemeral_key_pair.public_key, key_pair.secret_key);
 
   // Assert
   EXPECT_EQ(plaintext, decrypted_plaintext);

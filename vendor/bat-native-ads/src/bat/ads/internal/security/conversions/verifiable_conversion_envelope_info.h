@@ -13,7 +13,8 @@ namespace security {
 
 struct VerifiableConversionEnvelopeInfo {
   VerifiableConversionEnvelopeInfo();
-  VerifiableConversionEnvelopeInfo(const VerifiableConversionEnvelopeInfo& info);
+  VerifiableConversionEnvelopeInfo(
+      const VerifiableConversionEnvelopeInfo& info);
   ~VerifiableConversionEnvelopeInfo();
 
   bool operator==(const VerifiableConversionEnvelopeInfo& rhs) const;

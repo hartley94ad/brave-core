@@ -300,8 +300,8 @@ void AdsServiceImpl::ChangeLocale(const std::string& locale) {
 }
 
 void AdsServiceImpl::OnTextLoaded(const SessionID& tab_id,
-                                     const std::vector<GURL>& redirect_chain,
-                                     const std::string& text) {
+                                  const std::vector<GURL>& redirect_chain,
+                                  const std::string& text) {
   if (!connected()) {
     return;
   }

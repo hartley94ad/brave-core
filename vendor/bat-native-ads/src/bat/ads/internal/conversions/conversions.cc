@@ -53,8 +53,7 @@ bool HasObservationWindowForAdEventExpired(const int observation_window,
   return true;
 }
 
-std::string ExtractVerifiableConversionId(
-    const std::string& html) {
+std::string ExtractVerifiableConversionId(const std::string& html) {
   re2::StringPiece text_string_piece(html);
   RE2 r("<meta.*name=\"ad-conversion-id\".*content=\"(.*)\".*>");
 
@@ -254,8 +253,7 @@ void Conversions::Convert(const AdEventInfo& ad_event,
 
   security::VerifiableConversionEnvelopeInfo envelope;
   if (verifiable_conversion.IsValid()) {
-    envelope = security::EncryptAndEncode(
-        verifiable_conversion);
+    envelope = security::EncryptAndEncode(verifiable_conversion);
     // TODO(Moritz Haller): Delete
     BLOG(1, "DEBUG encrypted conversion_id:\n"
                 << "ciphertext: '" << envelope.ciphertext << "',\n"
@@ -300,7 +298,8 @@ ConversionList Conversions::SortConversions(const ConversionList& conversions) {
   return sort->Apply(conversions);
 }
 
-void Conversions::AddItemToQueue(const AdEventInfo& ad_event,
+void Conversions::AddItemToQueue(
+    const AdEventInfo& ad_event,
     const security::VerifiableConversionEnvelopeInfo& envelope) {
   AdEventInfo conversion_ad_event = ad_event;
   conversion_ad_event.timestamp =

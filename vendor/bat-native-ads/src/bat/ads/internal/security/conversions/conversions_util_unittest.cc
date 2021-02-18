@@ -6,8 +6,8 @@
 #include "bat/ads/internal/security/conversions/conversions_util.h"
 
 #include "base/base64.h"
-#include "bat/ads/internal/security/conversions/verifiable_conversion_envelope_info.h"
 #include "bat/ads/internal/conversions/verifiable_conversion_info.h"
+#include "bat/ads/internal/security/conversions/verifiable_conversion_envelope_info.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 // npm run test -- brave_unit_tests --filter=BatAds*

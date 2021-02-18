@@ -152,8 +152,8 @@ void AdsImpl::OnHtmlLoaded(const int32_t tab_id,
 }
 
 void AdsImpl::OnTextLoaded(const int32_t tab_id,
-                              const std::vector<std::string>& redirect_chain,
-                              const std::string& text) {
+                           const std::vector<std::string>& redirect_chain,
+                           const std::string& text) {
   DCHECK(!redirect_chain.empty());
 
   if (!IsInitialized()) {
