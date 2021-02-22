@@ -33,6 +33,9 @@ class IPFSTabHelper : public content::WebContentsObserver,
   IPFSTabHelper& operator=(IPFSTabHelper&) = delete;
 
   static bool MaybeCreateForWebContents(content::WebContents* web_contents);
+  GURL ipfs_url() const {
+    return ipfs_url_;
+  }
 
  private:
   friend class content::WebContentsUserData<IPFSTabHelper>;
@@ -46,7 +49,7 @@ class IPFSTabHelper : public content::WebContentsObserver,
                            const std::vector<std::string>& text_results);
 
   PrefService* pref_service_ = nullptr;
-  bool called_ = false;
+  GURL ipfs_url_;
   std::unique_ptr<IPFSDNSResolver> resolver_;
   base::WeakPtrFactory<IPFSTabHelper> weak_ptr_factory_{this};
   WEB_CONTENTS_USER_DATA_KEY_DECL();

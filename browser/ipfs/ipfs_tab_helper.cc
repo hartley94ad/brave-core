@@ -30,6 +30,9 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/storage_partition.h"
+#include "brave/components/ipfs/ipfs_utils.h"
+#include "chrome/common/channel_info.h"
+
 
 namespace {
 const char kDnsLinkHeader[] = "dnslink";
@@ -99,8 +102,23 @@ void IPFSTabHelper::DNSResolvedCallback(const std::string& host,
   std::string dnslink = GetDSNRecordValue(text_results, kDnsLinkHeader);
   if (dnslink.empty())
     return;
+    
   DLOG(INFO) << "dnslink for " << host << " resolved as " << dnslink;
-  
+  std::vector<std::string> tokens = base::SplitString(
+      dnslink, "ipfs/", base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
+  base::ReplaceFirstSubstringAfterOffset(&dnslink, 0, "/ipfs/", "ipfs://");
+
+  ipfs_url_ = GURL(dnslink);
+  /*GURL raw_url(web_contents()->GetURL());
+  GURL::Replacements replacements;
+  replacements.SetPathStr(dnslink);
+
+  if (!::ipfs::ResolveIPFSURI(
+            web_contents()->GetBrowserContext(),
+            chrome::GetChannel(),
+            raw_url.ReplaceComponents(replacements),
+            &ipfs_url_)) {
+  }*/
 }
 
 void IPFSTabHelper::ResolveIPFSLink() {
@@ -126,7 +144,7 @@ void IPFSTabHelper::DidFinishNavigation(content::NavigationHandle* handle) {
   if (!handle->IsInMainFrame()) {
     return;
   }
-
+  ipfs_url_ = GURL();
   auto resolve_method = static_cast<ipfs::IPFSResolveMethodTypes>(
       pref_service_->GetInteger(kIPFSResolveMethod));
   auto* browser_context = web_contents()->GetBrowserContext();
@@ -137,7 +155,7 @@ void IPFSTabHelper::DidFinishNavigation(content::NavigationHandle* handle) {
   if (resolve_method == ipfs::IPFSResolveMethodTypes::IPFS_ASK &&
       handle->GetResponseHeaders() &&
       handle->GetResponseHeaders()->HasHeader("x-ipfs-path") &&
-      IsDefaultGatewayURL(GURL("ns1.ethdns.xyz"), browser_context)) {
+      IsDefaultGatewayURL(GURL(handle->GetURL()), browser_context)) {
     auto infobar_count = pref_service_->GetInteger(kIPFSInfobarCount);
     if (!infobar_count) {
       pref_service_->SetInteger(kIPFSInfobarCount, infobar_count + 1);

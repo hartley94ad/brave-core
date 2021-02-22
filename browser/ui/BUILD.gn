@@ -386,6 +386,13 @@ source_set("ui") {
       ]
     }
 
+    if (ipfs_enabled) {
+      sources += [
+        "views/location_bar/ipfs_location_view.cc",
+        "views/location_bar/ipfs_location_view.h",
+      ]
+    }
+
     deps += [
       "//brave/browser/extensions",
       "//brave/browser/resources/extensions:resources",

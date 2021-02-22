@@ -67,7 +67,11 @@ void IPFSDNSResolver::Stop() {
   if (host_resolver_.is_bound()) {
     host_resolver_.reset();
   }
+  if (receiver_.is_bound()) {
+    receiver_.reset();
+  }
   resolving_host_.erase();
+  callback_.Reset();
 }
 
 void IPFSDNSResolver::OnComplete(int result,
