@@ -11,6 +11,7 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 
+
 namespace content {
 class NavigationHandle;
 class WebContents;
@@ -30,7 +31,7 @@ class IPFSTabHelper : public content::WebContentsObserver,
   IPFSTabHelper& operator=(IPFSTabHelper&) = delete;
 
   static bool MaybeCreateForWebContents(content::WebContents* web_contents);
-
+  void ResolvedCallback();
  private:
   friend class content::WebContentsUserData<IPFSTabHelper>;
   explicit IPFSTabHelper(content::WebContents* web_contents);
@@ -40,7 +41,9 @@ class IPFSTabHelper : public content::WebContentsObserver,
       content::NavigationHandle* navigation_handle) override;
 
   PrefService* pref_service_ = nullptr;
-
+  bool called_ = false;
+  int count_ = 0;
+  base::WeakPtrFactory<IPFSTabHelper> weak_ptr_factory_{this};
   WEB_CONTENTS_USER_DATA_KEY_DECL();
 };
 
