@@ -236,7 +236,7 @@ void Conversions::CheckRedirectChain(
 }
 
 void Conversions::Convert(const AdEventInfo& ad_event,
-    const VerifiableConversionInfo& verifiable_conversion) {) {
+    const VerifiableConversionInfo& verifiable_conversion) {
   const std::string campaign_id = ad_event.campaign_id;
   const std::string creative_set_id = ad_event.creative_set_id;
   const std::string creative_instance_id = ad_event.creative_instance_id;

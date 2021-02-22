@@ -12,6 +12,7 @@
 
 #include "base/guid.h"
 #include "base/time/time.h"
+#include "base/values.h"
 #include "bat/ads/confirmation_type.h"
 #include "bat/ads/internal/account/confirmations/confirmations_state.h"
 #include "bat/ads/internal/catalog/catalog_issuers_info.h"
@@ -138,7 +139,9 @@ ConfirmationInfo Confirmations::CreateConfirmation(
   const BlindedToken blinded_token = blinded_tokens.front();
   confirmation.blinded_payment_token = blinded_token;
 
-  const std::string payload = CreateConfirmationRequestDTO(confirmation);
+  base::DictionaryValue user_data;
+  const std::string payload = CreateConfirmationRequestDTO(confirmation,
+      user_data);
   confirmation.credential = CreateCredential(unblinded_token, payload);
 
   confirmation.timestamp = static_cast<int64_t>(base::Time::Now().ToDoubleT());

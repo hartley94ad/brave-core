@@ -76,7 +76,9 @@ class BatAdsRedeemUnblindedTokenTest : public UnitTestBase {
     confirmation.blinded_payment_token =
         BlindedToken::decode_base64(blinded_payment_token_base64);
 
-    const std::string payload = CreateConfirmationRequestDTO(confirmation);
+    base::DictionaryValue user_data;
+    const std::string payload = CreateConfirmationRequestDTO(confirmation,
+        user_data);
     confirmation.credential = CreateCredential(unblinded_token, payload);
 
     confirmation.timestamp = 1587127747;

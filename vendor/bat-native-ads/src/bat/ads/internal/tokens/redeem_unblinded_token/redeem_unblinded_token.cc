@@ -6,6 +6,7 @@
 #include "bat/ads/internal/tokens/redeem_unblinded_token/redeem_unblinded_token.h"
 
 #include <functional>
+#include <memory>
 #include <utility>
 #include <vector>
 
@@ -23,6 +24,7 @@
 #include "bat/ads/internal/tokens/redeem_unblinded_token/create_confirmation_url_request_builder.h"
 #include "bat/ads/internal/tokens/redeem_unblinded_token/create_confirmation_util.h"
 #include "bat/ads/internal/tokens/redeem_unblinded_token/fetch_payment_token_url_request_builder.h"
+#include "bat/ads/internal/tokens/redeem_unblinded_token/user_data/confirmation_dto_user_data_builder.h"
 #include "net/http/http_status_code.h"
 #include "wrapper.hpp"
 
@@ -47,22 +49,27 @@ void RedeemUnblindedToken::set_delegate(
 void RedeemUnblindedToken::Redeem(const ConfirmationInfo& confirmation) {
   BLOG(1, "Redeem unblinded token");
 
-  if (!confirmation.created) {
-    CreateConfirmation(confirmation);
-    return;
-  }
-
-  FetchPaymentToken(confirmation);
+  dto::user_data::Build(confirmation,
+      [=](base::DictionaryValue* user_data) {
+    if (!confirmation.created) {
+      // CreateConfirmation(confirmation, user_data);
+      CreateConfirmation(confirmation);
+      return;
+    }
+    FetchPaymentToken(confirmation);
+  });
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 
+// void CreateConfirmation(confirmation, user_data) {
 void RedeemUnblindedToken::CreateConfirmation(
     const ConfirmationInfo& confirmation) {
   BLOG(1, "CreateConfirmation");
   BLOG(2, "POST /v1/confirmation/{confirmation_id}/{credential}");
 
   CreateConfirmationUrlRequestBuilder url_request_builder(confirmation);
+  // CreateConfirmationUrlRequestBuilder url_request_builder(confirmation, user_data);
   UrlRequestPtr url_request = url_request_builder.Build();
   BLOG(5, UrlRequestToString(url_request));
   BLOG(7, UrlRequestHeadersToString(url_request));
