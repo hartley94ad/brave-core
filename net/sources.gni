@@ -8,13 +8,5 @@ import("//brave/components/unstoppable_domains/buildflags/buildflags.gni")
 brave_net_sources = [
   "//brave/net/proxy_resolution/proxy_config_service_tor.cc",
   "//brave/net/proxy_resolution/proxy_config_service_tor.h",
+  "//brave/net/unstoppable_domains/constants.h",
 ]
-
-brave_net_deps = [ "//brave/components/unstoppable_domains/buildflags" ]
-
-if (unstoppable_domains_enabled) {
-  brave_net_deps += [
-    "//brave/components/unstoppable_domains:constants",
-    "//brave/components/unstoppable_domains:utils",
-  ]
-}
