@@ -67,8 +67,6 @@ class IPFSLocationButtonView : public views::LabelButton {
                                         base::Unretained(this)),
                     l10n_util::GetStringUTF16(IDS_LOCATION_BAR_OPEN_IN_IPFS)),
         profile_(profile) {
-    if (profile->IsTor())
-      SetText(l10n_util::GetStringUTF16(IDS_LOCATION_BAR_IPFS_AVAILABLE));
     // Render vector icon
     const gfx::ImageSkia image =
         gfx::CreateVectorIcon(kOpenInTorIcon, kIconSize, kIconColor);
@@ -110,7 +108,7 @@ class IPFSLocationButtonView : public views::LabelButton {
     if (!browser)
       return;
     content::OpenURLParams open_tor(ipfs_location_, content::Referrer(),
-                                    WindowOpenDisposition::CURRENT_TAB,
+                                    WindowOpenDisposition::NEW_FOREGROUND_TAB,
                                     ui::PAGE_TRANSITION_TYPED, false);
     browser->OpenURL(open_tor);
 

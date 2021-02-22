@@ -102,23 +102,12 @@ void IPFSTabHelper::DNSResolvedCallback(const std::string& host,
   std::string dnslink = GetDSNRecordValue(text_results, kDnsLinkHeader);
   if (dnslink.empty())
     return;
-    
-  DLOG(INFO) << "dnslink for " << host << " resolved as " << dnslink;
-  std::vector<std::string> tokens = base::SplitString(
-      dnslink, "ipfs/", base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
-  base::ReplaceFirstSubstringAfterOffset(&dnslink, 0, "/ipfs/", "ipfs://");
-
-  ipfs_url_ = GURL(dnslink);
-  /*GURL raw_url(web_contents()->GetURL());
+  GURL current = web_contents()->GetURL();
+  if (current.host() != host)
+    return;
   GURL::Replacements replacements;
-  replacements.SetPathStr(dnslink);
-
-  if (!::ipfs::ResolveIPFSURI(
-            web_contents()->GetBrowserContext(),
-            chrome::GetChannel(),
-            raw_url.ReplaceComponents(replacements),
-            &ipfs_url_)) {
-  }*/
+  replacements.SetSchemeStr(kIPNSScheme);
+  ipfs_url_ = current.ReplaceComponents(replacements);
 }
 
 void IPFSTabHelper::ResolveIPFSLink() {
