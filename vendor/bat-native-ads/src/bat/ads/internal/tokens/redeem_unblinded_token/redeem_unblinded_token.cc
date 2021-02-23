@@ -50,12 +50,13 @@ void RedeemUnblindedToken::Redeem(const ConfirmationInfo& confirmation) {
   BLOG(1, "Redeem unblinded token");
 
   dto::user_data::Build(confirmation,
-      [=](base::DictionaryValue* user_data) {
+      [=](const base::DictionaryValue&) {
     if (!confirmation.created) {
       // CreateConfirmation(confirmation, user_data);
       CreateConfirmation(confirmation);
       return;
     }
+
     FetchPaymentToken(confirmation);
   });
 }

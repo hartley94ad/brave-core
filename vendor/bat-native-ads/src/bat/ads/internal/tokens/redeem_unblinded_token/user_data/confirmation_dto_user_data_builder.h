@@ -18,7 +18,7 @@ struct ConfirmationInfo;
 namespace dto {
 namespace user_data {
 
-using Callback = std::function<void(base::DictionaryValue*)>;
+using Callback = std::function<void(const base::DictionaryValue&)>;
 
 void Build(const ConfirmationInfo& confirmation, Callback callback);
 
