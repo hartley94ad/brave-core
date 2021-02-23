@@ -50,13 +50,33 @@ export const DialogTitle = styled<{}, 'div'>('div')`
   color: ${p => isDarkTheme(p) ? '#F0F2FF' : '#212529'};
 `
 
-export const StyledCloseIcon = styled<{}, 'div'>('div')`
+export const CloseButton = styled('button')`
+  appearance: none;
+  background: none;
+  border: none;
   position: absolute;
-  top: 16px;
+  padding: 4px;
+  box-sizing: content-box;
+  margin: 0;
   right: 16px;
+  top: 16px;
   width: 16px;
   height: 16px;
   cursor: pointer;
+  border-radius: 100%;
+  outline: none;
+  transition: background .12s ease-in-out, box-shadow .12s ease-in-out;
+  [dir=rtl] & {
+    right: unset;
+    left: 16px;
+  }
+  :hover, :focus-visible {
+    background: rgba(255, 255, 255, .3);
+  }
+  :active {
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, .6);
+  }
+
   color: ${p => isDarkTheme(p) ? '#C2C4CF' : '#495057'};
 `
 

@@ -5,17 +5,18 @@
 
 import * as React from 'react'
 
+import { getLocale } from '../../../../common/locale'
+
 import {
+  CloseButton,
   StyledDialogWrapper,
   StyledDialog,
   DialogTitle,
-  StyledCloseIcon,
   StyledInputLabel,
   StyledInput,
   StyledButtonsContainer,
   StyledButton
 } from './style'
-import { getLocale } from '../../../../common/locale'
 import CloseIcon from './assets/close-icon'
 
 interface Props {
@@ -103,9 +104,9 @@ export default class EditTopSite extends React.PureComponent<Props, {}> {
             {targetTopSiteForEditing ? getLocale('editTopSiteDialogTitle')
                                      : getLocale('addTopSiteDialogTitle')}
           </DialogTitle>
-          <StyledCloseIcon onClick={onClose}>
+          <CloseButton onClick={onClose}>
             <CloseIcon/>
-          </StyledCloseIcon>
+          </CloseButton>
           <StyledInputLabel>
             {getLocale('addTopSiteDialogNameLabel')}
           </StyledInputLabel>

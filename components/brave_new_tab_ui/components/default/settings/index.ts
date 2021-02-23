@@ -463,10 +463,19 @@ export const StyledTopSitesCustomizationSettings = styled('div')`
   gap: var(--widget-gap)
 `
 
-export const StyledTopSitesCustomizationSettingsOption = styled<{}, 'div'>('div')`
+export const StyledTopSitesCustomizationSettingsOption = styled<{}, 'button'>('button')`
   width: calc(50% - var(--widget-gap) / 2);
   display: flex;
   flex-direction: column;
+  padding: 0;
+  border: unset;
+  background: inherit;
+
+  &:focus-visible {
+    outline-style: solid;
+    outline-color: ${p => p.theme.color.brandBrave};
+    outline-width: 1px;
+  }
 `
 
 interface CustomizationImageBorderProps {
@@ -492,12 +501,6 @@ export const StyledTopSitesCustomizationImageBorder = styled<CustomizationImageB
       border: 2px solid ${p => isDarkTheme(p) ? '#C2C4CF' : '#AEB1C2'};
       background: ${p => isDarkTheme(p) ? '#2B2D3F' : '#FAFAFF'};
       padding: 1px;
-    }
-
-    &:focus {
-      border: 3px solid rgba(251, 84, 43, 0.6);
-      background: ${p => isDarkTheme(p) ? '#2B2D3F' : '#FAFAFF'};
-      padding: 0px;
     }
   `}
 `
